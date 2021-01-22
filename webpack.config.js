@@ -20,6 +20,7 @@ module.exports = {
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       title: 'TestHarbor',
+      template: 'src/index.html',
     }),
     new CopyPlugin({
       patterns: [{
