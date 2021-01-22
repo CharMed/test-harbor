@@ -20,7 +20,7 @@
   },
   "lint-staged": {
     "src/**/*.{ts,tsx}": [
-      "eslint . --fix", "git add"
+      "npm run lint", "git add"
     ]
   },
   "dependencies": {

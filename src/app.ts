@@ -22,8 +22,9 @@ class Game {
     document.body.appendChild(this.app.view);
   }
 
-  // eslint-disable-next-line class-methods-use-this
   setup(): void {
+    // eslint-disable-next-line no-console
+    console.log('Setup', this);
   }
 }
 
