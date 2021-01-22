@@ -2,13 +2,14 @@ import { Application } from 'pixi.js';
 
 class Game {
   private app: Application;
-
+  private width = window.innerWidth - 100;
+  private height = window.innerHeight - 100;
   constructor() {
     // instantiate app
     this.app = new Application({
-      width: 512,
-      height: 512,
-      backgroundColor: 0x1099bb, // light blue
+      width: this.width,
+      height: this.height,
+      backgroundColor: 0x1099bb,
     });
 
     // create view in DOM
