@@ -6,9 +6,23 @@
   "scripts": {
     "npm-reset": "rm -rf node_modules && npm cache verify && npm i",
     "start": "webpack serve",
-    "build": "webpack"
+    "build": "webpack",
+    "lint": "eslint -c ./.eslintrc.js --fix ./src/**/*.ts "
   },
-  "keywords": ["game", "harbor"],
+  "keywords": [
+    "game",
+    "harbor"
+  ],
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.{ts,tsx}": [
+      "npm run lint", "git add"
+    ]
+  },
   "dependencies": {
     "pixi.js": "5.3.7",
     "@tweenjs/tween.js": "18.6.4",
@@ -31,6 +45,8 @@
     "eslint-plugin-import": "^2.22.1",
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^4.5.1",
+    "husky": "^4.3.8",
+    "lint-staged": "^10.5.3",
     "style-loader": "^2.0.0",
     "ts-loader": "^8.0.14",
     "typescript": "^4.1.3",
