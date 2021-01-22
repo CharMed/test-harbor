@@ -1,0 +1,41 @@
+{
+  "name": "test-harbor",
+  "version": "0.0.1",
+  "main": "./src/app.ts",
+  "description": "Test project: Game Harbor",
+  "scripts": {
+    "npm-reset": "rm -rf node_modules && npm cache verify && npm i",
+    "start": "webpack serve",
+    "build": "webpack"
+  },
+  "keywords": ["game", "harbor"],
+  "dependencies": {
+    "pixi.js": "5.3.7",
+    "@tweenjs/tween.js": "18.6.4",
+    "lodash": "4.17.20"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.10",
+    "@babel/preset-env": "^7.12.11",
+    "@types/node": "^14.14.22",
+    "@types/pixi.js": "^5.0.0",
+    "@typescript-eslint/eslint-plugin": "^4.14.0",
+    "@typescript-eslint/parser": "^4.14.0",
+    "babel-loader": "^8.2.2",
+    "clean-webpack-plugin": "^3.0.0",
+    "copy-webpack-plugin": "^7.0.0",
+    "css-loader": "^5.0.1",
+    "eslint": "^7.18.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-import-resolver-typescript": "^2.3.0",
+    "eslint-plugin-import": "^2.22.1",
+    "file-loader": "^6.2.0",
+    "html-webpack-plugin": "^4.5.1",
+    "style-loader": "^2.0.0",
+    "ts-loader": "^8.0.14",
+    "typescript": "^4.1.3",
+    "webpack": "^5.16.0",
+    "webpack-cli": "^4.4.0",
+    "webpack-dev-server": "^3.11.2"
+  }
+}
