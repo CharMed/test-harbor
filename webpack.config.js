@@ -29,6 +29,12 @@ module.exports = {
         to: './assets',
       }],
     }),
+    new webpack.ProvidePlugin({
+      PIXI: 'pixi.js',
+    }),
+    new webpack.DefinePlugin({
+      NODE_ENV: process.env.NODE_ENV,
+    }),
     new webpack.ProgressPlugin(),
   ],
 
