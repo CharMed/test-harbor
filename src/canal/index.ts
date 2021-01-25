@@ -15,13 +15,19 @@ export class Canal extends BaseController {
 
   #view: CanalView;
 
+  #busy = false;
+
   constructor() {
     super();
     this.#view = new CanalView();
   }
 
+  toggleBusy() : void {
+    this.#busy = !this.#busy;
+  }
+
   isBusy(): boolean {
-    return false;
+    return this.#busy;
   }
 
   getView(): Container {
