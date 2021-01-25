@@ -1,4 +1,4 @@
-import { Tween } from '@tweenjs/tween.js';
+import { Easing, Group, Tween } from '@tweenjs/tween.js';
 import { Graphics } from 'pixi.js';
 import { BaseController } from '../base-controller';
 import { IDownloadManager } from '../download-manager';
@@ -27,13 +27,17 @@ export class Ship extends BaseController implements IDownloadManager {
     },
   }
 
-  tween: Tween<TweenPosition> | undefined;
+  #tween: Tween<TweenPosition> | undefined;
 
   constructor({ type = 'unloader', goods = 0 }: IShipConstructor) {
     super();
     this.#model = new ShipModel({ goods, type });
     this.#view = new ShipView(this.getColorByType('stroke'));
     this.checkView();
+  }
+
+  get type() : ShipType {
+    return this.#model.type;
   }
 
   getView(): Graphics {
@@ -53,24 +57,39 @@ export class Ship extends BaseController implements IDownloadManager {
   }
 
   load(q?: number) : number {
-    return this.#model.load(q);
+    const result = this.#model.load(q);
+    this.checkView();
+    return result;
   }
 
   upload(q? : number): number {
-    return this.#model.upload(q);
+    const result = this.#model.upload(q);
+    this.checkView();
+    return result;
   }
 
   destroy() : void {
     this.#view.destroy();
   }
 
-  updatePosition(position: TweenPosition) {
+  updatePosition(position: TweenPosition) : void {
     this.#view.getContainer().position.set(position.x, position.y);
   }
-  navigate(position: TweenPosition): void {
-    if (this.tween) {
-      this.tween.onUpdate(this.updatePosition.bind(this));
-    }
+
+  onStopTween() : void {
+    this.#tween = undefined;
+  }
+
+  navigate(position: TweenPosition, group: Group, callback:(p?: TweenPosition) => void): void {
+    const start: TweenPosition = { x: this.#view.getContainer().x, y: this.#view.getContainer().y };
+    this.#tween = new Tween<TweenPosition>(start, group).easing(Easing.Linear.None);
+    this.#tween.to(position, 1000);
+    this.#tween.onUpdate(this.updatePosition.bind(this));
+    this.#tween.onComplete((pos : TweenPosition) => {
+      this.onStopTween();
+      callback(pos);
+    });
+    this.#tween.start();
   }
 
   getModel(): ShipModel {

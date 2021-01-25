@@ -25,7 +25,7 @@ export class ShipModel implements IDownloadManager {
      * Check if ship gave goods.
      */
     hasGoods() : boolean {
-      return !!this.#goods;
+      return this.#goods > 0;
     }
 
     /**
@@ -45,6 +45,6 @@ export class ShipModel implements IDownloadManager {
      */
     upload(quantity = 1): number {
       this.#goods -= quantity;
-      return this.#goods;
+      return quantity;
     }
 }
