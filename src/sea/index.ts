@@ -1,7 +1,9 @@
 import { Easing, Group, Tween } from '@tweenjs/tween.js';
 import { Container } from 'pixi.js';
 import { BaseController } from '../base-controller';
+import { SIZE } from '../constant';
 import { Harbor } from '../harbor';
+import { Pier } from '../pier';
 import { Ship } from '../ship';
 import { ShipType } from '../ship/model';
 import { SeaView } from './view';
@@ -16,17 +18,14 @@ export function getRandomInt(from = 0, to = 1): number {
 }
 
 export function createShip(): Ship {
-  const goods = getRandomInt();
-  const type = ['loader', 'unloader'][getRandomInt()] as ShipType;
+  const goods = Math.random() >= 0.5 ? 1 : 0;
+  const type = ['loader', 'unloader'][goods] as ShipType;
   return new Ship({ goods, type });
-}
-
-export function createTween(position: TweenPosition, group: Group): Tween<TweenPosition> {
-  return new Tween(position, group).easing(Easing.Linear.None);
 }
 
 export class Sea implements BaseController {
   #view : SeaView;
+
   #harbor: Harbor;
 
   #tweenGroup: Group = new Group();
@@ -42,20 +41,36 @@ export class Sea implements BaseController {
 
   addShip(): void {
     const ship = createShip();
-    const position: TweenPosition = {
-      x: ship.getView().x,
-      y: ship.getView().y,
-    };
-    ship.tween = createTween(position, this.#tweenGroup);
-    ship.navigate({ x: 50, y: 200 });
-    ship.tween.onStop(() => {
-      console.log('stop');
-      ship.tween = undefined;
-      this.#harbor.addShip(ship);
+    const startShip: TweenPosition = { x: SIZE.SEA.width, y: getRandomInt(SIZE.SEA.height) };
+    ship.getView().position.set(startShip.x, startShip.y);
+    const route = this.#harbor.routeShip(ship);
+    ship.navigate(route.getPosition(), this.#tweenGroup, () => {
+      if (route instanceof Pier) {
+        route.connect(ship);
+        if (ship.type === 'loader') {
+          route.upload();
+        } else {
+          route.load();
+        }
+
+        route.disconnect();
+
+        setTimeout(() => {
+          ship.navigate(startShip, this.#tweenGroup, () => {
+            ship.destroy();
+            this.addShip();
+          });
+        }, 1000);
+      }
     });
+    this.#view.getContainer().addChild(ship.getView());
   }
 
   getView() : Container {
     return this.#view.getContainer();
+  }
+
+  updateTicker() : void {
+    this.#tweenGroup.update();
   }
 }
