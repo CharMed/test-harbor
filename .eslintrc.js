@@ -1,3 +1,7 @@
+const { off } = require('process');
+
+const isProd = process.env.NODE_ENV === 'production';
+
 module.exports = {
   env: {
     browser: true,
@@ -17,8 +21,13 @@ module.exports = {
     '@typescript-eslint',
   ],
   rules: {
-    '@typescript-eslint/type-annotation-spacing': ['error', { before: false, after: true, overrides: { arrow: { before: true, after: true } } }],
-    '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+    '@typescript-eslint/no-unused-vars': isProd ? ['error', { argsIgnorePattern: '^_' }] : ['warn'],
+    'no-console': 'warn',
+    'no-bitwise': 'warn',
+    'no-debugger': isProd ? 'error' : 'warn',
+    'linebreak-style:': 'off',
+    'import/prefer-default-export': 'off',
+
     'import/extensions': [
       'error',
       'ignorePackages',
