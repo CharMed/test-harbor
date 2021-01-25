@@ -9,6 +9,8 @@ export class PierView extends BaseView {
       width: SIZE.PIER.width,
       height: SIZE.PIER.height,
       strokeWidth: 2,
+      pivotX: SIZE.PIER.width / 2,
+      pivotY: SIZE.PIER.height / 2,
     });
   }
 }

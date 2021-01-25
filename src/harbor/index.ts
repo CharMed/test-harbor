@@ -1,9 +1,11 @@
-import { Container, filters, Graphics } from 'pixi.js';
+import { Container } from 'pixi.js';
 import { BaseController } from '../base-controller';
 import { Canal } from '../canal';
 import { SIZE } from '../constant';
 import { Pier } from '../pier';
+import { TweenPosition } from '../sea';
 import { Ship } from '../ship';
+import { ShipType } from '../ship/model';
 import { HarborView } from './view';
 
 export class Harbor extends BaseController {
@@ -11,7 +13,7 @@ export class Harbor extends BaseController {
 
   #piers : Array<Pier> = [];
 
- #canal : Canal = new Canal();
+  #canal : Canal = new Canal();
 
   #queryExit: Map<Ship, Ship> = new Map();
 
@@ -49,11 +51,22 @@ export class Harbor extends BaseController {
     return this.#view.getContainer();
   }
 
-  addShip(ship: Ship): void {
+  getRouteObject(type: ShipType) : Harbor|Pier {
+    const pierIndex = this.#piers.findIndex((el: Pier) => !el.isBusy() && ((type === 'unloader' && el.isEmpty()) || (type === 'loader' && !el.isEmpty())));
 
+    if (pierIndex > -1) {
+      return this.#piers[pierIndex];
+    }
+
+    return this;
   }
 
-  deleteShip(ship : Ship) : void {
+  getPosition(): TweenPosition {
+    return { x: this.#view.getContainer().width, y: this.#view.getContainer().height / 2 };
+  }
 
+  routeShip(ship: Ship): Harbor|Pier {
+    const route = this.getRouteObject(ship.type);
+    return route;
   }
 }

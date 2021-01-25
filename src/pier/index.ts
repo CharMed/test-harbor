@@ -1,6 +1,7 @@
 import { Graphics } from 'pixi.js';
 import { BaseController } from '../base-controller';
 import { IDownloadManager } from '../download-manager';
+import { TweenPosition } from '../sea';
 import { Ship } from '../ship';
 import { PierModel } from './model';
 import { PierView } from './view';
@@ -44,6 +45,10 @@ export class Pier extends BaseController implements IDownloadManager {
     return this.#model.isBusy();
   }
 
+  isEmpty(): boolean {
+    return this.#model.isEmpty();
+  }
+
   connect(ship: Ship) : void {
     this.#model.connectShip(ship);
   }
@@ -66,5 +71,9 @@ export class Pier extends BaseController implements IDownloadManager {
 
   getView(): Graphics {
     return this.#view.getContainer() as Graphics;
+  }
+
+  getPosition(): TweenPosition {
+    return { x: this.#view.getContainer().width / 2, y: this.#view.getContainer().y };
   }
 }
