@@ -1,5 +1,6 @@
 import { Container, Graphics } from 'pixi.js';
 import { BaseController } from '../base-controller';
+import { TweenPosition } from '../sea';
 // import { IDownloadManager } from '../download-manager';
 // import { Ship } from '../ship';
 // import { PierModel } from './model';
@@ -32,5 +33,11 @@ export class Canal extends BaseController {
 
   getView(): Container {
     return this.#view.getContainer();
+  }
+
+  getPosition() : TweenPosition {
+    const x = this.getView().x + this.getView().width;
+    const y = this.getView().height / 2;
+    return { x, y };
   }
 }

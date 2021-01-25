@@ -10,13 +10,13 @@ export class CanalView extends BaseView {
   constructor() {
     super({
       name: 'canal',
-      color: 0xff0000,
       width: SIZE.CANAL.width,
       height: SIZE.CANAL.height,
       strokeWidth: 0,
     });
-    this.draw(0xff0000);
-    this.#bottom.beginFill(0xff0000);
+    const color = 0xffff00;
+    this.draw(color);
+    this.#bottom.beginFill(color);
     this.#bottom.drawRect(0, 0, SIZE.CANAL.width, SIZE.CANAL.height);
     this.#bottom.endFill();
 
