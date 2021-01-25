@@ -27,6 +27,8 @@ module.exports = {
     'no-debugger': isProd ? 'error' : 'warn',
     'linebreak-style:': 'off',
     'import/prefer-default-export': 'off',
+    // FIXME: fix no cycle warns
+    'import/no-cycle': 'warn',
 
     'import/extensions': [
       'error',
