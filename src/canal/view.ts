@@ -4,6 +4,7 @@ import { SIZE } from '../constant';
 
 export class CanalView extends BaseView {
   #container: Container = new Container();
+
   #bottom: Graphics = new Graphics();
 
   constructor() {

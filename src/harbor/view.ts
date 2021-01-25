@@ -11,7 +11,7 @@ export class HarborView {
     this.#container.height = SIZE.HARBOR.height;
     const area = new Graphics();
     area.name = 'harbor-area';
-    area.beginFill(0, 0.1).drawRect(0, 0, SIZE.HARBOR.width,  SIZE.HARBOR.height).endFill();
+    area.beginFill(0, 0.1).drawRect(0, 0, SIZE.HARBOR.width, SIZE.HARBOR.height).endFill();
     this.#container.addChild(area);
   }
 
