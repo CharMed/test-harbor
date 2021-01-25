@@ -36,7 +36,7 @@ export class Sea implements BaseController {
     this.#harbor = new Harbor();
     this.#view.getContainer().addChild(this.#harbor.getView());
 
-    this.addShip();
+    setInterval(() => this.addShip(), 1000);
   }
 
   addShip(): void {
@@ -44,6 +44,9 @@ export class Sea implements BaseController {
     const startShip: TweenPosition = { x: SIZE.SEA.width, y: getRandomInt(SIZE.SEA.height) };
     ship.getView().position.set(startShip.x, startShip.y);
     const route = this.#harbor.routeShip(ship);
+    if (route instanceof Pier) {
+      route.connect(ship);
+    }
     ship.navigate(route.getPosition(), this.#tweenGroup, () => {
       if (route instanceof Pier) {
         route.connect(ship);
@@ -53,12 +56,11 @@ export class Sea implements BaseController {
           route.load();
         }
 
-        route.disconnect();
-
         setTimeout(() => {
+          route.disconnect();
+
           ship.navigate(startShip, this.#tweenGroup, () => {
             ship.destroy();
-            this.addShip();
           });
         }, 1000);
       }
