@@ -2,6 +2,7 @@
 
 test project for ONSEO
 
+DEMO: https://charmed.github.io/test-harbor/
 ## Launch it
 
 Prerequisite:
