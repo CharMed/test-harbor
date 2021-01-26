@@ -1,7 +1,7 @@
 import { Graphics } from 'pixi.js';
-import { BaseController } from '../base-controller';
-import { IDownloadManager } from '../download-manager';
-import { TweenPosition } from '../sea';
+import { BaseController } from '../base/base-controller';
+import { IDownloadManager } from '../utils/download-manager';
+import { TweenPosition } from '../utils/i-tween-position';
 import { Ship } from '../ship';
 import { PierModel } from './model';
 import { PierView } from './view';

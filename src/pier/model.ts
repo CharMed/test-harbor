@@ -1,4 +1,4 @@
-import { IDownloadManager } from '../download-manager';
+import { IDownloadManager } from '../utils/download-manager';
 import { Ship } from '../ship';
 
 export class PierModel implements IDownloadManager {

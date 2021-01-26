@@ -1,4 +1,4 @@
-import { IDownloadManager } from '../download-manager';
+import { IDownloadManager } from '../utils/download-manager';
 
 export type ShipType = 'loader'| 'unloader';
 

@@ -1,14 +1,10 @@
-import { Application, Point, Graphics } from 'pixi.js';
+import { Application } from 'pixi.js';
 
 import { Sea } from './sea';
 import './development';
 
 class Game {
   private app: Application;
-
-  private width = window.innerWidth - 100;
-
-  private height = window.innerHeight - 100;
 
   #sea: Sea | undefined;
 
@@ -25,9 +21,9 @@ class Game {
     this.setup();
   }
 
-  onUpdateTicker(delta?: number) {
+  onUpdateTicker() {
     if (this.#sea) {
-      this.#sea.updateTicker();
+      this.#sea.updateTicker(this.app.ticker.lastTime);
     }
   }
 

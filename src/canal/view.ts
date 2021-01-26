@@ -1,6 +1,6 @@
 import { Container, Graphics } from 'pixi.js';
-import { BaseView } from '../base-view';
-import { SIZE } from '../constant';
+import { BaseView } from '../base/base-view';
+import { SIZE } from '../utils/constant';
 
 export class CanalView extends BaseView {
   #container: Container = new Container();

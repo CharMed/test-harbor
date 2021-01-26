@@ -1,9 +1,6 @@
-import { Container, Graphics } from 'pixi.js';
-import { BaseController } from '../base-controller';
-import { TweenPosition } from '../sea';
-// import { IDownloadManager } from '../download-manager';
-// import { Ship } from '../ship';
-// import { PierModel } from './model';
+import { Container } from 'pixi.js';
+import { BaseController } from '../base/base-controller';
+import { TweenPosition } from '../utils/i-tween-position';
 import { CanalView } from './view';
 
 export interface IPierConstructor {
@@ -11,9 +8,9 @@ export interface IPierConstructor {
   color? : number,
 }
 
+// TODO: can divide to 2 class model and controller
+//       but currently  model is to simply
 export class Canal extends BaseController {
-  // #model: PierModel;
-
   #view: CanalView;
 
   #busy = false;

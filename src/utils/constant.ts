@@ -22,3 +22,8 @@ export const SIZE = {
     y: 30,
   },
 };
+
+export const TIME = {
+  CREATE_SHIP: 2000,
+  UPLOAD_SHIP: 1250,
+};

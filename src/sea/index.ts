@@ -1,20 +1,13 @@
-import { Easing, Group, Tween } from '@tweenjs/tween.js';
+import { Group } from '@tweenjs/tween.js';
 import { Container } from 'pixi.js';
-import { BaseController } from '../base-controller';
-import { SIZE } from '../constant';
+import { BaseController } from '../base/base-controller';
+import { SIZE, TIME } from '../utils/constant';
 import { Harbor } from '../harbor';
+import { TweenPosition } from '../utils/i-tween-position';
 import { Ship } from '../ship';
 import { ShipType } from '../ship/model';
+import { getRandomInt } from '../utils/get-random-int';
 import { SeaView } from './view';
-
-export interface TweenPosition {
-  x: number,
-  y: number,
-}
-
-export function getRandomInt(from = 0, to = 1): number {
-  return Math.round(Math.random() * from + to);
-}
 
 // TODO: better set each 4 different as previous
 export function createShip(): Ship {
@@ -35,21 +28,27 @@ export class Sea implements BaseController {
 
     this.#harbor = new Harbor();
     this.#view.getContainer().addChild(this.#harbor.getView());
-    // FIXME: hardcode `setInterval`
-    this.addShip();
-    setInterval(() => this.addShip(), 4000);
+    this.startShipFabric();
   }
 
-  addShip(): void {
+  private startShipFabric() {
+    // TODO: will be more stable if use `requestAnimationFrame` on better `app.ticker`
+    //       but it is faster implementation of creation ship each `n` msec
+    this.addShip();
+    setInterval(() => this.addShip(), TIME.CREATE_SHIP);
+  }
+
+  private async navigateShip(ship: Ship) : Promise<unknown> {
+    const result = await ship.navigate(this.#harbor.getEnterPosition(), this.#tweenGroup);
+    this.#harbor.goToEnter(ship);
+    return result;
+  }
+
+  private addShip(): void {
     const ship = createShip();
     const startShip: TweenPosition = { x: SIZE.SEA.width, y: getRandomInt(SIZE.SEA.height) };
     ship.getView().position.set(startShip.x, startShip.y);
-
-    ship.navigate(
-      this.#harbor.getEnterPosition(),
-      this.#tweenGroup,
-      () => this.#harbor.goToEnter(ship),
-    );
+    this.navigateShip(ship);
     this.#view.getContainer().addChild(ship.getView());
   }
 
@@ -57,8 +56,8 @@ export class Sea implements BaseController {
     return this.#view.getContainer();
   }
 
-  updateTicker() : void {
+  updateTicker(time?: number) : void {
     this.#harbor.queryWorker(this.#tweenGroup);
-    this.#tweenGroup.update();
+    this.#tweenGroup.update(time);
   }
 }

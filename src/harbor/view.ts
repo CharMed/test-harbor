@@ -1,5 +1,5 @@
-import { Container, filters, Graphics } from 'pixi.js';
-import { SIZE } from '../constant';
+import { Container, Graphics } from 'pixi.js';
+import { SIZE } from '../utils/constant';
 
 export class HarborView {
   #container: Container;

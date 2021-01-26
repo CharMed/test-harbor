@@ -1,4 +1,4 @@
-import { TweenPosition } from '../sea';
+import { TweenPosition } from '../utils/i-tween-position';
 import { Ship } from '../ship';
 
 export class Query {
@@ -29,9 +29,14 @@ export class Query {
     this.#map.delete(ship);
   }
 
+  // FIXME: fix position of query items
   getPosition(): TweenPosition {
     const x = this.#position.x + this.#space * this.#map.size;
     const { y } = this.#position;
     return { x, y };
+  }
+
+  getFirstItem() : Ship {
+    return this.#map.keys().next().value;
   }
 }

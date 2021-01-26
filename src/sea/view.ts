@@ -1,5 +1,5 @@
 import { Container } from 'pixi.js';
-import { SIZE } from '../constant';
+import { SIZE } from '../utils/constant';
 
 export class SeaView {
   #container: Container;

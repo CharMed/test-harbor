@@ -1,8 +1,8 @@
 import { Easing, Group, Tween } from '@tweenjs/tween.js';
 import { Graphics } from 'pixi.js';
-import { BaseController } from '../base-controller';
-import { IDownloadManager } from '../download-manager';
-import { TweenPosition } from '../sea';
+import { BaseController } from '../base/base-controller';
+import { IDownloadManager } from '../utils/download-manager';
+import { TweenPosition } from '../utils/i-tween-position';
 import { IShipModelConstructor, ShipModel, ShipType } from './model';
 import { ShipView } from './view';
 
@@ -80,19 +80,18 @@ export class Ship extends BaseController implements IDownloadManager {
     this.#tween = undefined;
   }
 
-  navigate(position: TweenPosition, group: Group, callback:(p?: TweenPosition) => void): void {
+  navigate(position: TweenPosition, group: Group): Promise<unknown> {
     const start: TweenPosition = { x: this.#view.getContainer().x, y: this.#view.getContainer().y };
-    this.#tween = new Tween<TweenPosition>(start, group).easing(Easing.Linear.None);
-    this.#tween.to(position, 1000);
-    this.#tween.onUpdate(this.updatePosition.bind(this));
-    this.#tween.onComplete((pos : TweenPosition) => {
-      this.onStopTween();
-      callback(pos);
+    const promise = new Promise((resolve) => {
+      this.#tween = new Tween<TweenPosition>(start, group).easing(Easing.Linear.None);
+      this.#tween.to(position, 1000);
+      this.#tween.onUpdate(this.updatePosition.bind(this));
+      this.#tween.onComplete((pos : TweenPosition) => {
+        this.onStopTween();
+        resolve(pos);
+      });
+      this.#tween.start();
     });
-    this.#tween.start();
-  }
-
-  getModel(): ShipModel {
-    return this.#model;
+    return promise;
   }
 }

@@ -1,5 +1,5 @@
-import { BaseView } from '../base-view';
-import { SIZE } from '../constant';
+import { BaseView } from '../base/base-view';
+import { SIZE } from '../utils/constant';
 
 export class PierView extends BaseView {
   constructor(color = 0) {
