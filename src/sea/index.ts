@@ -46,7 +46,7 @@ export class Sea implements BaseController {
 
   private addShip(): void {
     const ship = createShip();
-    const startShip: TweenPosition = { x: SIZE.SEA.width, y: getRandomInt(SIZE.SEA.height) };
+    const startShip: TweenPosition = { x: SIZE.SEA.width, y: getRandomInt(SIZE.SEA.height / 2) };
     ship.getView().position.set(startShip.x, startShip.y);
     this.navigateShip(ship);
     this.#view.getContainer().addChild(ship.getView());

@@ -102,7 +102,8 @@ export class Harbor extends BaseController {
       };
 
       const goToExitFromPierCallback = async () => {
-        await first.navigate(this.#queryEnter.getPosition(), group);
+        const position = { x: this.#queryEnter.getFirstItemPosition().x, y: first.getView().y };
+        await first.navigate(position, group);
         goToEnterFromExitCallback();
       };
 
@@ -112,13 +113,13 @@ export class Harbor extends BaseController {
 
     if (this.#queryEnter.query.size > 0) {
       // eslint-disable-next-line no-restricted-syntax
-      for (const ship of this.#queryEnter.query.values()) {
+      for (const ship of this.#queryEnter.query.keys()) {
         const pierIndex = this.#model.getFreePierIndex(ship.type);
         if (pierIndex > -1) {
           const pier = this.#piers[pierIndex];
           pier.connect(ship);
           this.#canal.toggleBusy();
-          this.deleteFromQuery(ship);
+          this.deleteFromQuery(ship, group);
 
           const goToPierCallback = () => {
             this.#canal.toggleBusy();
@@ -150,8 +151,17 @@ export class Harbor extends BaseController {
     }
   }
 
-  private deleteFromQuery(ship: Ship) : void {
-    this.#queryEnter.deleteShip(ship);
+  private deleteFromQuery(deleteShip: Ship, group? : Group) : void {
+    this.#queryEnter.deleteShip(deleteShip);
+    if (group) {
+      const callback = (ship: Ship, position: TweenPosition) => {
+        const res = { x: position.x, y: ship.getView().y };
+        ship.navigate(res, group);
+      };
+      Array.from(this.#queryEnter.query.keys()).forEach((ship: Ship, index: number) => {
+        callback(ship, this.#queryEnter.getPositionByNumber(index));
+      });
+    }
   }
 
   isBusyCanal():boolean {

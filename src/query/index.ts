@@ -2,7 +2,7 @@ import { TweenPosition } from '../utils/i-tween-position';
 import { Ship } from '../ship';
 
 export class Query {
-  #map: Map<Ship, Ship>;
+  #map: Map<Ship, number>;
 
   #position: TweenPosition;
 
@@ -17,21 +17,34 @@ export class Query {
     this.#space = space;
   }
 
-  get query() : Map<Ship, Ship> {
+  get query() : Map<Ship, number> {
     return this.#map;
   }
 
   addShip(ship: Ship) : void {
-    this.#map.set(ship, ship);
+    this.#map.set(ship, this.#map.size);
   }
 
-  deleteShip(ship: Ship): void {
+  deleteShip(ship: Ship): number {
+    const value = this.#map.get(ship) || this.#map.size;
     this.#map.delete(ship);
+    return value;
   }
 
-  // FIXME: fix position of query items
   getPosition(): TweenPosition {
     const x = this.#position.x + this.#space * this.#map.size;
+    const { y } = this.#position;
+    return { x, y };
+  }
+
+  getPositionByNumber(count = 0): TweenPosition {
+    const x = this.#position.x + this.#space * count;
+    const { y } = this.#position;
+    return { x, y };
+  }
+
+  getFirstItemPosition(): TweenPosition {
+    const x = this.#position.x + this.#space;
     const { y } = this.#position;
     return { x, y };
   }
