@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html >
+<html>
 
 <head>
   <meta charset="UTF-8">
@@ -15,7 +15,12 @@
       padding: 20px 50px;
     }
 
-    canvas {
+    .container {
+      position: relative;
+      margin: auto;
+    }
+
+    .canvas {
       display: block;
       margin: auto;
     }
@@ -23,13 +28,13 @@
     .task-detail {
       display: none;
     }
-    
+
 
     .task-label:checked+.task-detail {
       display: block;
     }
 
-    .solution-link{
+    .solution-link {
       margin-right: 30px;
     }
 
@@ -55,6 +60,7 @@
       font-weight: bold;
       padding-left: 0;
     }
+
     li ul li {
       font-weight: normal;
       margin-left: 20px;
@@ -69,9 +75,9 @@
   <h2 style="display: inline-block">
     <a class="solution-link" href="https://github.com/CharMed/test-harbor/tree/master"> Github</a>
 
-   <label for="task-label"> Умови завдання </label>
+    <label for="task-label"> Умови завдання </label>
   </h2>
-   <input class="task-label" type="checkbox" id="task-label">
+  <input class="task-label" type="checkbox" id="task-label">
   <div class="task-detail">
     <ul>Вхідні дані:
       <li> Є робоче поле прямокутної форми «море» </li>
@@ -119,6 +125,9 @@
     </ul>
   </div>
 
+  <div class="container">
+    <canvas class="canvas" id="view"></canvas>
+  </div>
 
 </body>
 
