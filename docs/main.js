@@ -42498,12 +42498,6 @@ Loader.use = function LoaderUseStatic(fn) {
 
 "use strict";
 
-var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (receiver, privateMap) {
-    if (!privateMap.has(receiver)) {
-        throw new TypeError("attempted to get private field on non-instance");
-    }
-    return privateMap.get(receiver);
-};
 var __classPrivateFieldSet = (this && this.__classPrivateFieldSet) || function (receiver, privateMap, value) {
     if (!privateMap.has(receiver)) {
         throw new TypeError("attempted to set private field on non-instance");
@@ -42511,22 +42505,37 @@ var __classPrivateFieldSet = (this && this.__classPrivateFieldSet) || function (
     privateMap.set(receiver, value);
     return value;
 };
-var _sea;
+var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (receiver, privateMap) {
+    if (!privateMap.has(receiver)) {
+        throw new TypeError("attempted to get private field on non-instance");
+    }
+    return privateMap.get(receiver);
+};
+var _sea, _scale;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const pixi_js_1 = __webpack_require__(/*! pixi.js */ "./node_modules/pixi.js/lib/pixi.es.js");
 const sea_1 = __webpack_require__(/*! ./sea */ "./src/sea/index.ts");
 __webpack_require__(/*! ./development */ "./src/development.ts");
+const constant_1 = __webpack_require__(/*! ./utils/constant */ "./src/utils/constant.ts");
 class Game {
     constructor() {
         _sea.set(this, void 0);
+        _scale.set(this, 1);
+        const width = (window.innerWidth - 100) / 2;
+        const height = (width * 9) / 16;
+        const view = document.getElementById('view');
         // instantiate app
         this.app = new pixi_js_1.Application({
-            width: 480,
-            height: 270,
+            view,
+            width,
+            height,
             backgroundColor: 0x1099bb,
         });
+        __classPrivateFieldSet(this, _scale, width / constant_1.SIZE.SEA.width);
         // create view in DOM
-        document.body.appendChild(this.app.view);
+        if (!view) {
+            document.body.appendChild(this.app.view);
+        }
         this.setup();
     }
     onUpdateTicker() {
@@ -42537,10 +42546,11 @@ class Game {
     setup() {
         __classPrivateFieldSet(this, _sea, new sea_1.Sea());
         this.app.stage.addChild(__classPrivateFieldGet(this, _sea).getView());
+        this.app.stage.scale.set(__classPrivateFieldGet(this, _scale), __classPrivateFieldGet(this, _scale));
         this.app.ticker.add(this.onUpdateTicker.bind(this));
     }
 }
-_sea = new WeakMap();
+_sea = new WeakMap(), _scale = new WeakMap();
 // eslint-disable-next-line no-new
 new Game();
 
