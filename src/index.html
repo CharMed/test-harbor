@@ -1,19 +1,63 @@
 <!DOCTYPE html>
-<html>
+<html >
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="initial-scale=1, maximum-scale=1">
-  <title>TestHarbor</title>
+  <title>Візуалізація роботи порту</title>
+  <meta name="robots" content="noindex" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <style>
     body {
       margin: 0;
+      padding: 20px 50px;
     }
 
     canvas {
-      margin: 20px 50px;
+      display: block;
+      margin: auto;
+    }
+
+    .task-detail {
+      display: none;
+    }
+    
+
+    .task-label:checked+.task-detail {
+      display: block;
+    }
+
+    .solution-link{
+      margin-right: 30px;
+    }
+
+    ul {
+      font-weight: bold;
+      font-size: large;
+    }
+
+    ul li {
+      font-size: medium;
+      font-weight: normal;
+      margin-top: 1rem;
+    }
+
+    ul ul {
+      margin-top: 0;
+      margin-left: 0;
+      margin-top: 20px;
+      font-size: medium;
+    }
+
+    li ul {
+      font-weight: bold;
+      padding-left: 0;
+    }
+    li ul li {
+      font-weight: normal;
+      margin-left: 20px;
     }
   </style>
 
@@ -21,6 +65,61 @@
 </head>
 
 <body>
+  <h1> Візуалізація роботи порту </h1>
+  <h2 style="display: inline-block">
+    <a class="solution-link" href="https://github.com/CharMed/test-harbor/tree/master"> Github</a>
+
+   <label for="task-label"> Умови завдання </label>
+  </h2>
+   <input class="task-label" type="checkbox" id="task-label">
+  <div class="task-detail">
+    <ul>Вхідні дані:
+      <li> Є робоче поле прямокутної форми «море» </li>
+      <li>
+        <ul> З одного боку моря знаходиться порт
+          <li>Порт – виділена прамокутна область з  одним входом</li>
+          <li>Одночасно через вхід може проходити лише один корабель</li>
+          <li>В порту 4 пристані, на початку усі вони порожні. </li>
+        </ul>
+      </li>
+      <li>
+        <ul>Пристань
+          <li>Пристань – прямокутна область. Якщо пристань заповнена вантажем, прямокутник залитий кольором. Інакше –
+            прозорий </li>
+          <li>До однієї пристані може приплисти одночасно один корабель. Ємність пристані точно така ж як ємність
+            корабля.
+            Тобто 1 корабель заповнює або спорожнює вантаж повністтю. </li>
+        </ul>
+      </li>
+      <li>
+        <ul>Кораблі – прямокутники зеленого або червоного кольору. Вони привозять вантаж в порт і спорожнюють його
+          <li>Є 2 типи кораблів: зелені – приходять за вантажем; червоні – приходять з вантажем</li>
+          <li>Заповнений корабел відображається залитим кольором прямокутником</li>
+          <li>Корабль може підійти тільки до вільної пристані</li>
+          <li>Корабль має ємність таку ж як пристань, тому він повністю розвантажується або завантажуються</li>
+          <li>Червоні кораблі заходять повними і виходять порожніми, зелені навпаки</li>
+          <li>Якщо у порту немає вантажу на вільних пристанях, зелені кораблі стають у чергу на завантаження, якщо в
+            порту
+            всі вільні пристані заповнені, червоні кораблі стають в чергу на розвантаження</li>
+        </ul>
+
+      </li>
+      <li>Кораблі приходять з протилежного боку моря і йдуть, після виконаної роботи в пору туди ж. Тип корабля (зелений
+        чи
+        червоний) обирається випадково. Частота появи кораблів 1 на 8 сек.
+      </li>
+      <li>Час перебування корабля у порту 5 сек. </li>
+    </ul>
+
+    <ul>
+      Обов’язково використати технології та патерни:
+      <li>ООП </li>
+      <li>Pixi.js – для візуалізації (https://www.pixijs.com/) </li>
+      <li>TweenJS – для анімацій (https://github.com/tweenjs/tween.js/) </li>
+    </ul>
+  </div>
+
+
 </body>
 
 </html>
