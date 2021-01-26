@@ -1,4 +1,4 @@
-import { Application } from 'pixi.js';
+import { Application } from 'pixi.js-legacy';
 
 import { Sea } from './sea';
 import './development';
