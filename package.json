@@ -7,6 +7,8 @@
     "npm-reset": "rm -rf node_modules && npm cache verify && npm i",
     "start": "webpack serve",
     "build": "webpack",
+    "prepublic": "npm run build",
+    "public": "rm -rf docs &&  mkdir -p docs && cp dist/main.js docs/main.js && cp dist/main.js.map docs/main.js.map  && cp dist/index.html docs/index.html",
     "lint": "eslint -c ./.eslintrc.js --fix ./src/**/*.ts "
   },
   "keywords": [
